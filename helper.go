@@ -23,3 +23,11 @@ func MakeAmountFromSnakeFormat(val string) (decimal.Decimal, error) {
 	r := regexp.MustCompile("[_]")
 	return decimal.NewFromFormattedString(val, r)
 }
+
+func MakePenny(val int64) decimal.Decimal {
+	return NewPenny(val, true)
+}
+
+func MakePennyExtra(val int64) decimal.Decimal {
+	return NewPenny(val, false)
+}
