@@ -1,27 +1,16 @@
 package money
 
 import (
-	gm "github.com/Rhymond/go-money"
+	i "github.com/kallaurru/money/internal"
+	"github.com/shopspring/decimal"
 )
 
 type Crypto struct {
-	_m       *gm.Money
-	netID    string
-	netLevel int
+	amount   decimal.Decimal
+	currency i.CryptoCurrency
 }
 
-func New(m *gm.Money, netID string, netLevel int) *Crypto {
-	return &Crypto{
-		_m:       m,
-		netID:    netID,
-		netLevel: netLevel,
-	}
-}
-
-func NewFromMoney(amount int64, code, netID string, netLevel int) *Crypto {
-	return &Crypto{
-		_m:       gm.New(amount, code),
-		netID:    netID,
-		netLevel: netLevel,
-	}
+func NewCrypto(amount decimal.Decimal, code string) (Crypto, bool) {
+	// false если не найден был код и вернули описание денег по-умолчанию
+	return Crypto{}, true
 }

@@ -2,4 +2,7 @@ module github.com/kallaurru/money
 
 go 1.24.1
 
-require github.com/Rhymond/go-money v1.0.15 // indirect
+require (
+	github.com/Rhymond/go-money v1.0.15 // indirect
+	github.com/shopspring/decimal v1.4.0 // indirect
+)

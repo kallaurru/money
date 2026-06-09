@@ -1,4 +1,4 @@
-package money
+package internal
 
 import (
 	gm "github.com/Rhymond/go-money"
@@ -7,6 +7,7 @@ import (
 
 type CryptoCurrency struct {
 	Code     string
+	Grapheme string
 	Template string
 	Decimal  string
 	Thousand string
@@ -18,8 +19,8 @@ type CryptoCurrency struct {
 type CC map[string]*CryptoCurrency
 
 var cc = CC{
-	BTC: {Decimal: ".", Thousand: ",", Code: "", Fraction: 4, Template: "1 BTC"},
-	ETH: {Decimal: ".", Thousand: ",", Code: "", Fraction: 2, Template: "1 ETH"},
+	BTC: {Decimal: ".", Thousand: ",", Code: "", Fraction: 4, Grapheme: "BTC", Template: "1 $"},
+	ETH: {Decimal: ".", Thousand: ",", Code: "", Fraction: 2, Grapheme: "ETH", Template: "1 $"},
 }
 
 func (cc CC) Add(c *CryptoCurrency) CC {
@@ -42,6 +43,7 @@ func AddCryptoCurrency(code, Grapheme, Template, Decimal, Thousand string, Fract
 	c := CryptoCurrency{
 		Code:     code,
 		Template: Template,
+		Grapheme: Grapheme,
 		Decimal:  Decimal,
 		Thousand: Thousand,
 		Fraction: Fraction,
@@ -66,7 +68,7 @@ func (cr *CryptoCurrency) Formatter() *gm.Formatter {
 		Fraction: cr.Fraction,
 		Decimal:  cr.Decimal,
 		Thousand: cr.Thousand,
-		Grapheme: "",
+		Grapheme: cr.Grapheme,
 		Template: cr.Template,
 	}
 }

@@ -1,4 +1,4 @@
-package money
+package internal
 
 const (
 	BTC    = "BTC"
