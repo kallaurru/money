@@ -1,9 +1,10 @@
-package internal
+package crypto
 
 const (
 	BTC    = "BTC"
 	ETH    = "ETH"
-	TON    = "TON"
+	GRAM   = "GRAM"
 	SOL    = "SOL"
+	HYPE   = "HYPE"
 	RIPPLE = "XRP"
 )

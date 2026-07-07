@@ -1,4 +1,9 @@
-package internal
+package currency
+
+import (
+	f "github.com/kallaurru/money/internal/formatter"
+	"github.com/shopspring/decimal"
+)
 
 var currencies = Currencies{
 	AED: {Decimal: ".", Thousand: ",", Code: AED, Fraction: 2, NumericCode: "784", Grapheme: ".\u062f.\u0625", Template: "1 $"},
@@ -180,7 +185,48 @@ var currencies = Currencies{
 	ZWL: {Decimal: ".", Thousand: ",", Code: ZWL, Fraction: 2, NumericCode: "932", Grapheme: "Z$", Template: "$1"},
 }
 
-// Currency represents money currency information required for formatting.
+func FindByCode(code string) (*Currency, bool) {
+	val, ok := currencies[code]
+	if !ok {
+		empty := emptyCurrency()
+		return &empty, false
+	}
+
+	return val, true
+}
+
+func (c Currency) Formatter() *f.Formatter {
+	return &f.Formatter{
+		Fraction: c.Fraction,
+		Decimal:  c.Decimal,
+		Thousand: c.Thousand,
+		Grapheme: c.Grapheme,
+		Template: c.Template,
+	}
+}
+
+func (c Currency) IsFiat() bool {
+	return true
+}
+
+func (c Currency) Format(amount decimal.Decimal) string {
+	f := c.Formatter()
+
+	return f.Format(amount)
+}
+
+func emptyCurrency() Currency {
+	return Currency{
+		Code:        "",
+		NumericCode: "",
+		Grapheme:    "",
+		Template:    "",
+		Decimal:     "",
+		Thousand:    "",
+		Fraction:    0,
+	}
+}
+
 type Currency struct {
 	Fraction    int
 	Code        string
@@ -192,3 +238,15 @@ type Currency struct {
 }
 
 type Currencies map[string]*Currency
+
+func (c Currency) Clone() Currency {
+	return Currency{
+		Fraction:    c.Fraction,
+		Code:        c.Code,
+		NumericCode: c.NumericCode,
+		Grapheme:    c.Grapheme,
+		Template:    c.Template,
+		Decimal:     c.Decimal,
+		Thousand:    c.Thousand,
+	}
+}
