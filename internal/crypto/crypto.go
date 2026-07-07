@@ -2,6 +2,8 @@ package crypto
 
 import (
 	// gm "github.com/Rhymond/go-money"
+	"fmt"
+
 	f "github.com/kallaurru/money/internal/formatter"
 	"github.com/shopspring/decimal"
 )
@@ -55,8 +57,12 @@ func (cr Crypto) Format(amount decimal.Decimal) string {
 	return f.Format(amount)
 }
 
-func (cr Crypto) IsFiat() bool {
-	return false
+func (c Crypto) String(amount decimal.Decimal) string {
+	return amount.String()
+}
+
+func (c Crypto) Advanced() string {
+	return fmt.Sprintf("Code - %s, Net Level - %d, Net ID - %s", c.Code, c.NetLevel, c.NetID)
 }
 
 type Crypto struct {

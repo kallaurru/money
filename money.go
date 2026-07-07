@@ -8,7 +8,8 @@ import (
 
 type Money struct {
 	amount   decimal.Decimal
-	currency Monetary
+	currency CoinDescriber
+	isFiat   bool
 }
 
 func New(amount decimal.Decimal, code string) (Money, bool) {
@@ -20,6 +21,7 @@ func New(amount decimal.Decimal, code string) (Money, bool) {
 	return Money{
 		amount:   amount,
 		currency: val,
+		isFiat:   true,
 	}, true
 }
 
@@ -31,6 +33,7 @@ func NewCrypto(amount decimal.Decimal, code string) (Money, bool) {
 	return Money{
 		amount:   amount,
 		currency: val,
+		isFiat:   false,
 	}, true
 }
 
@@ -43,5 +46,9 @@ func (m Money) String() string {
 }
 
 func (m Money) IsFiat() bool {
-	return m.currency.IsFiat()
+	return m.IsFiat()
+}
+
+func (m Money) Amount() decimal.Decimal {
+	return m.amount
 }

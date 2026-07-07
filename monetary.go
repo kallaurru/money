@@ -3,6 +3,12 @@ package money
 import "github.com/shopspring/decimal"
 
 type Monetary interface {
-	Format(decimal.Decimal) string
 	IsFiat() bool
+	Amount() decimal.Decimal
+}
+
+type CoinDescriber interface {
+	Format(decimal.Decimal) string
+	String(decimal.Decimal) string
+	Advanced() string
 }
