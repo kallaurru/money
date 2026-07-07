@@ -1,6 +1,8 @@
 package currency
 
 import (
+	"fmt"
+
 	f "github.com/kallaurru/money/internal/formatter"
 	"github.com/shopspring/decimal"
 )
@@ -205,14 +207,18 @@ func (c Currency) Formatter() *f.Formatter {
 	}
 }
 
-func (c Currency) IsFiat() bool {
-	return true
-}
-
 func (c Currency) Format(amount decimal.Decimal) string {
 	f := c.Formatter()
 
 	return f.Format(amount)
+}
+
+func (c Currency) String(amount decimal.Decimal) string {
+	return amount.String()
+}
+
+func (c Currency) Advanced() string {
+	return fmt.Sprintf("Code - %s, Numeric Code - %s", c.Code, c.NumericCode)
 }
 
 func emptyCurrency() Currency {
