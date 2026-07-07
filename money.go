@@ -11,7 +11,7 @@ type Money struct {
 	currency Monetary
 }
 
-func NewMoney(amount decimal.Decimal, code string) (Money, bool) {
+func New(amount decimal.Decimal, code string) (Money, bool) {
 	val, ok := crn.FindByCode(code)
 	if !ok {
 		return Money{}, ok
@@ -36,6 +36,10 @@ func NewCrypto(amount decimal.Decimal, code string) (Money, bool) {
 
 func (m Money) Format() string {
 	return m.currency.Format(m.amount)
+}
+
+func (m Money) String() string {
+	return m.amount.String()
 }
 
 func (m Money) IsFiat() bool {

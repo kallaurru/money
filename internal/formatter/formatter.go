@@ -2,7 +2,6 @@ package formatter
 
 import (
 	"math"
-	"strconv"
 	"strings"
 
 	dt "github.com/shopspring/decimal"
@@ -31,8 +30,8 @@ func NewFormatter(fraction int, decimal, thousand, grapheme, template string) *F
 // Format returns string of formatted integer using given currency template.
 func (f *Formatter) Format(amount dt.Decimal) string {
 	// Work with absolute amount value
-	sa := strconv.FormatInt(f.abs(amount.IntPart()), 10)
-
+	sa := amount.StringFixed(int32(f.Fraction))
+	sa = strings.Replace(sa, ".", "", 1)
 	if len(sa) <= f.Fraction {
 		sa = strings.Repeat("0", f.Fraction-len(sa)+1) + sa
 	}
